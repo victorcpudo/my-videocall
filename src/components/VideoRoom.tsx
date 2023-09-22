@@ -32,8 +32,9 @@ export interface VideoRoomUser {
 
 export const VideoRoom = () => {
   const { data, isLoading } = useGenerateToken();
-  const { users, setUsers, setRoomCreator } = useVideoCall();
-  const [localTracks, setLocalTracks] = useState<ILocalTrack[]>([]);
+  const { users, setUsers } = useVideoCall();
+  const [localTracks, setLocalTracks] =
+    useState<[IMicrophoneAudioTrack, ICameraVideoTrack]>();
 
   const handleUserJoined = async (
     user: IAgoraRTCRemoteUser,
@@ -42,6 +43,8 @@ export const VideoRoom = () => {
     await agoraClient.subscribe(user, mediaType);
 
     if (mediaType === "video") {
+      console.log("NEW USER JOINED", user);
+
       setUsers((previousUsers) => [...previousUsers, user]);
     }
 
@@ -71,6 +74,7 @@ export const VideoRoom = () => {
     ) {
       return;
     }
+
     agoraClient.on("user-published", handleUserJoined);
 
     const uid = await agoraClient.join(
@@ -84,14 +88,6 @@ export const VideoRoom = () => {
     const [audioTrack, videoTrack] = tracks;
 
     setLocalTracks(tracks);
-
-    setRoomCreator({
-      uid,
-      videoTrack,
-      audioTrack,
-      hasVideo: true,
-      hasAudio: false,
-    } as unknown as IAgoraRTCRemoteUser);
 
     setUsers((previousUsers) => [
       ...previousUsers,
@@ -143,6 +139,7 @@ export const VideoRoom = () => {
     <section className="grid grid-cols-1 md:grid-cols-3 h-[75vh]">
       {users.map((user) => {
         if (user.uid !== agoraClient.uid) {
+          console.log("OTHER USER", user);
           return (
             <article
               key={user.uid}
@@ -158,6 +155,7 @@ export const VideoRoom = () => {
       })}
 
       {/* Now render the "You" */}
+
       {users.map((user) => {
         if (user.uid === agoraClient.uid) {
           return (
@@ -166,7 +164,7 @@ export const VideoRoom = () => {
               className="flex flex-col gap-2 p-4 w-full mt-auto mb-0"
             >
               <p>You</p>
-
+              <p>uid: {user.uid}</p>
               <VideoPlayer user={user} />
             </article>
           );
