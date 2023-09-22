@@ -8,6 +8,7 @@ export const VideoRoomFooter = () => {
   const {
     isMuted,
     isVideoOn,
+    localTracks,
     setIsJoined,
     setUsers,
     setIsMuted,
@@ -15,35 +16,27 @@ export const VideoRoomFooter = () => {
   } = useVideoCall();
 
   const handleToggleMicrofone = () => {
-    agoraClient.localTracks.map((track) => {
-      if (track.trackMediaType === "audio") {
-        track.setMuted(!track.muted);
+    localTracks[0].setMuted(!localTracks[0].muted);
 
-        setIsMuted(!track.muted);
-      }
-    });
+    setIsMuted(!isMuted);
   };
 
   const handleToggleCamera = () => {
-    agoraClient.localTracks.map((track) => {
-      if (track.trackMediaType === "video") {
-        track.setMuted(!track.muted);
+    localTracks[1].setMuted(!localTracks[1].muted);
 
-        setIsVideoOn(!track.muted);
-      }
-    });
+    setIsVideoOn(!isVideoOn);
   };
 
   return (
     <footer className="flex gap-4 w-full justify-between p-6 bg-slate-950">
-      {/* <button
+      <button
         className="w-16 h-16 bg-gray-900 text-gray-100 rounded-full"
         onClick={() => {
           handleToggleMicrofone();
         }}
       >
         {isMuted ? "unmute" : "mute"}
-      </button> */}
+      </button>
 
       <button
         className="w-16 h-16 bg-red-500 text-gray-100 rounded-full"
@@ -58,14 +51,14 @@ export const VideoRoomFooter = () => {
         end call
       </button>
 
-      {/* <button
+      <button
         className="w-16 h-16 bg-gray-900 text-gray-100 rounded-full"
         onClick={() => {
           handleToggleCamera();
         }}
       >
         {isVideoOn ? "camera on" : "camera off"}
-      </button> */}
+      </button>
     </footer>
   );
 };

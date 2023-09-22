@@ -32,9 +32,7 @@ export interface VideoRoomUser {
 
 export const VideoRoom = () => {
   const { data, isLoading } = useGenerateToken();
-  const { users, setUsers } = useVideoCall();
-  const [localTracks, setLocalTracks] =
-    useState<[IMicrophoneAudioTrack, ICameraVideoTrack]>();
+  const { users, localTracks, setUsers, setLocalTracks } = useVideoCall();
 
   const handleUserJoined = async (
     user: IAgoraRTCRemoteUser,
