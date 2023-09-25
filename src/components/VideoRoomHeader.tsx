@@ -12,7 +12,11 @@ export const VideoRoomHeader = () => {
 
       <p>You are a {agoraClient.role} in this call</p>
 
-      <div className="w-16 h-16 bg-green-300 rounded-full" />
+      <div>
+        {agoraClient.remoteUsers.map((user) => {
+          return <p key={user.uid}>{user.uid}</p>;
+        })}
+      </div>
     </header>
   );
 };

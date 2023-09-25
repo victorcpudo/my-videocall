@@ -21,14 +21,12 @@ export const VideoRoomFooter = () => {
     setIsMuted(!isMuted);
   };
 
-  const handleToggleCamera = () => {
-    localTracks[1].setMuted(!localTracks[1].muted);
-
+  const handleToggleCamera = async () => {
     setIsVideoOn(!isVideoOn);
   };
 
   return (
-    <footer className="flex gap-4 w-full justify-between p-6 bg-slate-950">
+    <footer className="fixed bottom-0 flex gap-4 w-full justify-between p-6 bg-gray-950 bg-opacity-30 opacity-0 hover:opacity-100 transition-opacity z-50">
       <button
         className="w-16 h-16 bg-gray-900 text-gray-100 rounded-full"
         onClick={() => {

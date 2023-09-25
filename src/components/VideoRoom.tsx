@@ -1,14 +1,11 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 import AgoraRTC, {
   IAgoraRTCRemoteUser,
-  ICameraVideoTrack,
   ILocalAudioTrack,
-  ILocalTrack,
   ILocalVideoTrack,
-  IMicrophoneAudioTrack,
   UID,
 } from "agora-rtc-sdk-ng";
 
@@ -22,7 +19,7 @@ import toast from "react-hot-toast/headless";
 import { useVideoCall } from "@/contexts/RoomCtx";
 import { LoadingRoom } from "./LoadingRoom";
 
-const APP_ID = "f2d5a57adb554f8a9d27a198f4d7a51c";
+const APP_ID = process.env.NEXT_PUBLIC_AGORA_APP_ID as string;
 
 export interface VideoRoomUser {
   uid: UID;
@@ -134,14 +131,14 @@ export const VideoRoom = () => {
   if (isLoading || !data) return <LoadingRoom />;
 
   return (
-    <section className="grid grid-cols-1 md:grid-cols-3 h-[75vh]">
+    <section className="grid grid-cols-1 sm:grid-cols-3 h-full min-h-[75vh] max-h-screen">
       {users.map((user) => {
         if (user.uid !== agoraClient.uid) {
           console.log("OTHER USER", user);
           return (
             <article
               key={user.uid}
-              className="col-span-1 md:col-span-2 flex flex-col gap-2 p-4 w-full max-h-[75vh]"
+              className="col-span-1 sm:col-span-2 flex flex-col gap-2 p-4 w-full min-w-full"
             >
               <p>Other person</p>
 
@@ -157,10 +154,7 @@ export const VideoRoom = () => {
       {users.map((user) => {
         if (user.uid === agoraClient.uid) {
           return (
-            <article
-              key={user.uid}
-              className="flex flex-col gap-2 p-4 w-full mt-auto mb-0"
-            >
+            <article key={user.uid} className="flex flex-col gap-2 p-4 w-full">
               <p>You</p>
               <p>uid: {user.uid}</p>
               <VideoPlayer user={user} />
