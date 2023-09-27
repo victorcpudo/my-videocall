@@ -17,8 +17,6 @@ export const useGenerateToken = () => {
 
       console.info("Generating authentication token for the video call");
 
-      console.log("CHANNEL NAME ON HOOK", channelName);
-
       const res = await fetch(
         `${functionsUrl}/generateAgoraToken?channelName=${channelName}`
       );

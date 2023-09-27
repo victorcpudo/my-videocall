@@ -22,8 +22,7 @@ export const RoomProvider = ({ children }: { children: React.ReactNode }) => {
   const [localTracks, setLocalTracks] =
     useState<[IMicrophoneAudioTrack, ICameraVideoTrack]>();
   const [isJoined, setIsJoined] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
-  const [isVideoOn, setIsVideoOn] = useState(false);
+  const [trackState, setTrackState] = useState({ video: true, audio: true });
 
   useEffect(() => {
     if (channelName && channelName.length > 0) {
@@ -34,17 +33,15 @@ export const RoomProvider = ({ children }: { children: React.ReactNode }) => {
   const values = useMemo(
     () => ({
       isJoined,
-      isVideoOn,
-      isMuted,
       users,
       localTracks,
+      trackState,
       setIsJoined,
-      setIsVideoOn,
-      setIsMuted,
+      setTrackState,
       setUsers,
       setLocalTracks,
     }),
-    [isJoined, isVideoOn, isMuted, users, localTracks]
+    [isJoined, users, localTracks, trackState]
   );
 
   return <RoomCtx.Provider value={values}>{children}</RoomCtx.Provider>;

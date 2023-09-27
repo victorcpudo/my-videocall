@@ -11,12 +11,6 @@ export const VideoRoomHeader = () => {
       <h1>{channelName}</h1>
 
       <p>You are a {agoraClient.role} in this call</p>
-
-      <div>
-        {agoraClient.remoteUsers.map((user) => {
-          return <p key={user.uid}>{user.uid}</p>;
-        })}
-      </div>
     </header>
   );
 };

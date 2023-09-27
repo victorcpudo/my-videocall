@@ -4,19 +4,23 @@ import { VideoRoom } from "@/components/VideoRoom";
 import React from "react";
 import { useVideoCall } from "../../contexts/RoomCtx";
 import { VideoRoomHeader } from "@/components/VideoRoomHeader";
-import { VideoRoomFooter } from "@/components/VideoRoomFooter";
+import { Controls } from "@/components/Controls";
+import { AgoraRTCProvider } from "@/hooks/useRTCClient";
+import { agoraClient } from "@/utils/agoraClient";
 
 const RoomPage = () => {
   const { isJoined } = useVideoCall();
 
   return (
-    <div className="flex flex-col justify-center w-full max-h-screen">
-      <VideoRoomHeader />
+    <AgoraRTCProvider client={agoraClient}>
+      <div className="flex flex-col justify-center w-full max-h-screen">
+        <VideoRoomHeader />
 
-      {isJoined && <VideoRoom />}
+        {isJoined && <VideoRoom />}
 
-      <VideoRoomFooter />
-    </div>
+        <Controls />
+      </div>
+    </AgoraRTCProvider>
   );
 };
 

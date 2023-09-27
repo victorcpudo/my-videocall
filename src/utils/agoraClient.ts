@@ -3,7 +3,7 @@ import AgoraRTC from "agora-rtc-sdk-ng";
 
 let agoraClient: IAgoraRTCClient;
 
-if (typeof window === "object") {
+if (window && typeof window === "object") {
   agoraClient = AgoraRTC.createClient({ mode: "rtc", codec: "vp9" });
 }
 

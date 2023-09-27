@@ -1,27 +1,21 @@
-import { IAgoraRTCRemoteUser } from "agora-rtc-sdk-ng";
-import React, { useEffect, useRef, useState } from "react";
+import { ICameraVideoTrack, IRemoteVideoTrack } from "agora-rtc-sdk-ng";
+import React, { useEffect, useRef } from "react";
 import { twMerge } from "tailwind-merge";
 
 export const VideoPlayer = ({
-  user,
+  videoTrack,
   className,
 }: {
-  user: IAgoraRTCRemoteUser;
+  videoTrack: ICameraVideoTrack | IRemoteVideoTrack;
   className?: string;
 }) => {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (ref.current && user.videoTrack) {
-      user.videoTrack.play(ref.current);
+    if (ref.current && videoTrack) {
+      videoTrack.play(ref.current);
     }
-  }, [user.videoTrack]);
-
-  useEffect(() => {
-    if (ref.current && user.audioTrack) {
-      user.audioTrack.play();
-    }
-  }, [user.audioTrack]);
+  }, [videoTrack]);
 
   return <div ref={ref} className={twMerge(`aspect-video`, className)}></div>;
 };
