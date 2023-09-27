@@ -45,9 +45,5 @@ export const VideoRoom = () => {
 
   if (isLoading || !data) return <LoadingRoom />;
 
-  return (
-    <section className="grid grid-cols-1 sm:grid-cols-3 h-full min-h-[75vh] max-h-screen">
-      {localTracks && <Videos users={users} tracks={localTracks} />}
-    </section>
-  );
+  return <>{localTracks && <Videos users={users} tracks={localTracks} />}</>;
 };

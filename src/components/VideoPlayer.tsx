@@ -17,5 +17,10 @@ export const VideoPlayer = ({
     }
   }, [videoTrack]);
 
-  return <div ref={ref} className={twMerge(`aspect-video`, className)}></div>;
+  return (
+    <div
+      ref={ref}
+      className={twMerge(`aspect-video rounded-lg`, className)}
+    ></div>
+  );
 };
